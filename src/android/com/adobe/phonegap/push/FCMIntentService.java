@@ -402,7 +402,6 @@ public class FCMIntentService extends FirebaseMessagingService implements PushCo
                 Log.d(LOG_TAG, "Using channel ID = " + channelID);
                 mBuilder = new NotificationCompat.Builder(context, channelID);
             }
-
         } else {
             mBuilder = new NotificationCompat.Builder(context);
         }
@@ -594,9 +593,7 @@ public class FCMIntentService extends FirebaseMessagingService implements PushCo
                 }
                 mBuilder.extend(new WearableExtender().addActions(wActions));
                 wActions.clear();
-            } catch (JSONException e) {
-                // nope
-            }
+            } catch (JSONException e) { }
         }
     }
 
@@ -632,8 +629,7 @@ public class FCMIntentService extends FirebaseMessagingService implements PushCo
             for (int i = 0; i < items.length; i++) {
                 try {
                     results[i] = Long.parseLong(items[i].trim());
-                } catch (NumberFormatException nfe) {
-                }
+                } catch (NumberFormatException nfe) { }
             }
             mBuilder.setVibrate(results);
         } else {
@@ -711,11 +707,6 @@ public class FCMIntentService extends FirebaseMessagingService implements PushCo
 
                 mBuilder.setStyle(bigText);
             }
-      /*
-      else {
-          mBuilder.setContentText("<missing message content>");
-      }
-      */
         }
     }
 
@@ -745,8 +736,7 @@ public class FCMIntentService extends FirebaseMessagingService implements PushCo
             for (int i = 0; i < items.length; i++) {
                 try {
                     results[i] = Integer.parseInt(items[i].trim());
-                } catch (NumberFormatException nfe) {
-                }
+                } catch (NumberFormatException nfe) { }
             }
             if (results.length == 4) {
                 mBuilder.setLights(Color.argb(results[0], results[1], results[2], results[3]), 500, 500);
@@ -791,7 +781,6 @@ public class FCMIntentService extends FirebaseMessagingService implements PushCo
         float cy = bitmap.getHeight() / 2;
         float radius = cx < cy ? cx : cy;
         canvas.drawCircle(cx, cy, radius, paint);
-
         paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
         canvas.drawBitmap(bitmap, rect, rect, paint);
 
@@ -930,12 +919,9 @@ public class FCMIntentService extends FirebaseMessagingService implements PushCo
     }
 
     private boolean isAvailableSender(String from) {
-        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(PushPlugin.COM_ADOBE_PHONEGAP_PUSH,
-                Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getApplicationContext().getSharedPreferences(PushPlugin.COM_ADOBE_PHONEGAP_PUSH, Context.MODE_PRIVATE);
         String savedSenderID = sharedPref.getString(SENDER_ID, "");
-
         Log.d(LOG_TAG, "sender id = " + savedSenderID);
-
         return from.equals(savedSenderID) || from.startsWith("/topics/");
     }
 }

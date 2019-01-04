@@ -18,7 +18,6 @@ public class PushDismissedHandler extends BroadcastReceiver implements PushConst
         if (action.equals(PUSH_DISMISSED)) {
             Log.d(LOG_TAG, "PushDismissedHandler = " + extras);
             Log.d(LOG_TAG, "not id = " + notID);
-
             fcm.setNotification(notID, "");
         }
     }
